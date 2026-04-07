@@ -42,4 +42,30 @@ class User extends Model {
             'role_id'
         );
     }
+    public function specialties(){
+        return $this->belongsToMany(
+            Specialty::class,
+            'lawyer_specialty',
+            'lawyer_id',
+            'specialty_id'
+        );
+    }
+    public function caseFiles(){
+        return $this->hasMany(CaseFile::class, 'lawyer_id');
+    }
+    public function folders(){
+        return $this->hasMany(Folder::class,'created_by');
+    }
+    public function files(){
+        return $this->hasMany(File::class,'uploaded_by');
+    }
+    public function aufitLogs(){
+        return $this->hasMany(AuditLog::class,'authenticated_user');
+    }
+    public function events(){
+        return $this->hasMany(Event::class,'created_by');
+    }
+    public function templates(){
+        return $this->hasMany(Template::class,'created_by');
+    }
 }

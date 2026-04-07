@@ -15,4 +15,12 @@ class Permission extends Model {
             'updated_at' => 'datetime',
         ];
     }
+    public function roles(){
+        return $this->belongsToMany(
+            Role::class,
+            'role_permission',
+            'permission_id',
+            'role_id'
+        );
+    }
 }

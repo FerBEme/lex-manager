@@ -17,6 +17,7 @@ class UserFactory extends Factory {
             'profile_photo' => null,
             'is_active' => $this->faker->randomElement([1,0]),
             'last_login_at' => null,
+            'lawyer_id' => null,
         ];
     }
 }

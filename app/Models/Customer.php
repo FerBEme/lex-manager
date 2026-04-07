@@ -23,4 +23,10 @@ class Customer extends Model {
             'updated_at' => 'datetime',
         ];
     }
+    public function caseFiles(){
+        return $this->hasMany(CaseFile::class, 'customer_id');
+    }
+    public function receipts(){
+        return $this->hasMany(Receipt::class,'customer_id');
+    }
 }

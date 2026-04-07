@@ -10,4 +10,7 @@ class FileStatus extends Model {
         'file_status_code',
         'description',
     ];
+    public function caseFiles(){
+        return $this->hasMany(CaseFile::class, 'status_id');
+    }
 }

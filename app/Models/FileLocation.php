@@ -11,4 +11,7 @@ class FileLocation extends Model {
         'name',
         'description',
     ];
+    public function caseFiles(){
+        return $this->hasMany(CaseFile::class, 'location_id');
+    }
 }

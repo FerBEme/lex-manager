@@ -10,5 +10,16 @@ class Specialty extends Model {
         'specialty_code',
         'name',
         'description',
-    ];
+    ];    
+    public function lawyers(){
+        return $this->belongsToMany(
+            User::class,
+            'lawyer_specialty',
+            'specialty_id',
+            'lawyer_id'
+        );
+    }
+    public function caseFiles(){
+        return $this->hasMany(CaseFile::class, 'specialty_id');
+    }
 }

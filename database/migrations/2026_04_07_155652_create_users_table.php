@@ -6,7 +6,6 @@ return new class extends Migration {
     public function up(): void {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('lawyer_id')->nullable()->constrained('users')->nullOnDelete();
             $table->enum('document_type',['dni','ce']);
             $table->char('document_number',9)->unique();
             $table->string('names');
@@ -19,6 +18,7 @@ return new class extends Migration {
             $table->string('profile_photo')->nullable();
             $table->tinyInteger('is_active')->default(1);
             $table->datetime('last_login_at')->nullable();
+            $table->foreignId('lawyer_id')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
         });
     }
