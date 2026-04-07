@@ -2,12 +2,12 @@
 namespace App\Models;
 use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Model;
-class Specialty extends Model {
+class FileLocation extends Model {
     use ApiTrait;
-    protected $table = 'specialties';
+    protected $table = 'file_locations';
     public $timestamps = false;
     protected $fillable = [
-        'specialty_code',
+        'file_location_code',
         'name',
         'description',
     ];

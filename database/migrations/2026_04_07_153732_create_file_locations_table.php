@@ -4,14 +4,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void {
-        Schema::create('specialties', function (Blueprint $table) {
+        Schema::create('file_locations', function (Blueprint $table) {
             $table->id();
-            $table->string('specialty_code',50)->unique();
-            $table->string('name')->nullable();
+            $table->string('file_location_code',50)->unique();
+            $table->string('name',50)->nullable();
             $table->text('description')->nullable();
         });
     }
     public function down(): void {
-        Schema::dropIfExists('specialties');
+        Schema::dropIfExists('file_locations');
     }
 };
