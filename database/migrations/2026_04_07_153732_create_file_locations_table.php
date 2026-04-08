@@ -7,7 +7,7 @@ return new class extends Migration {
         Schema::create('file_locations', function (Blueprint $table) {
             $table->id();
             $table->string('file_location_code',50)->unique();
-            $table->string('name',50)->nullable();
+            $table->string('name',50);
             $table->text('description')->nullable();
         });
     }

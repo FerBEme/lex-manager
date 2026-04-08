@@ -12,16 +12,22 @@ class RoleController extends Controller {
     }
     public function store(StoreRoleRequest $request) {
         $data = $request->validated();
+        $permissions = $data['permission'];
+        unset($data['permission']);
         $role = Role::create($data);
-        return RoleResource::make($role);
+        $role->permissions()->attach($permissions);
+        return RoleResource::make($role->load('permissions'));
     }
     public function show(Role $role) {
-        return RoleResource::make($role);
+        return RoleResource::make($role->load('permissions'));
     }
     public function update(UpdateRoleRequest $request, Role $role) {
         $data = $request->validated();
+        $permissions = $data['permission'];
+        unset($data['permission']);
         $role->update($data);
-        return RoleResource::make($role);
+        $role->permissions()->sync($permissions);
+        return RoleResource::make($role->load('permissions'));
     }
     public function destroy(Role $role) {
         $role->delete();
