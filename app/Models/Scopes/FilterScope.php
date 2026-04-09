@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Scope;
 class FilterScope implements Scope {
     public function apply(Builder $builder, Model $model): void {
         if (empty(request('filters'))) {
-            return ;
+            return;
         }
         $filters = request('filters');
-        foreach ($filters as $column => $condition) {
-            foreach ($condition as $operator => $value) {
+        foreach ($filters as $column => $conditions) {
+            foreach ($conditions as $operator => $value) {
                 if (in_array($operator,['!=','=','<','>','<=','>='])) {
                     $builder->where($column,$operator,$value);
                 }

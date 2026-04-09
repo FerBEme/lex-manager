@@ -1,10 +1,11 @@
 <?php
 namespace App\Models;
 use App\Traits\ApiTrait;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-class User extends Model {
-    use HasFactory, ApiTrait;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+class User extends Authenticatable  implements JWTSubject{
+    use HasFactory,ApiTrait;
     protected $table = 'users';
     protected $fillable = [
         'document_type',
@@ -67,5 +68,11 @@ class User extends Model {
     }
     public function templates(){
         return $this->hasMany(Template::class,'created_by');
+    }
+    public function getJWTIdentifier() {
+        return $this->getKey();
+    }
+    public function getJWTCustomClaims(): array {
+        return [];
     }
 }

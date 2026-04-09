@@ -1,8 +1,7 @@
 <?php
 namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-class Folder extends Model {
+class Folder extends Api {
     use HasFactory;
     protected $table = 'folders';
     protected $fillable = [
@@ -12,6 +11,7 @@ class Folder extends Model {
         'created_by',
     ];
     protected $casts = [
+        'id' => 'integer',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'case_file_id' => 'integer',

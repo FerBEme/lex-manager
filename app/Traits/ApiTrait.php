@@ -4,18 +4,19 @@ use App\Models\Scopes\FilterScope;
 use App\Models\Scopes\IncludeScope;
 use App\Models\Scopes\SelectScope;
 use App\Models\Scopes\SortScope;
-use Illuminate\Database\Eloquent\Builder;
 trait ApiTrait {
-    public static function booted(): void {
-        static::addGlobalScope(new FilterScope);
-        static::addGlobalScope(new SelectScope);
-        static::addGlobalScope(new SortScope);
-        static::addGlobalScope(new IncludeScope);
+    protected static function booted(): void {
+        static::addGlobalScopes([
+            FilterScope::class,
+            SelectScope::class,
+            SortScope::class,
+            IncludeScope::class,
+        ]);
     }
-    public function scopeGetOrPaginate(Builder $query){
-        if (empty(request('perPage'))) {
-            return $query->get();
+    public function scopeGetOrPaginate($query){
+        if (request('perPage')) {
+            return $query->paginate(request('perPage'));
         }
-        $query->paginate(request('perPage'));
+        return $query->get();
     }
 }

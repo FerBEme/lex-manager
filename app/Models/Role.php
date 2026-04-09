@@ -11,20 +11,23 @@ class Role extends Model {
         'name',
         'description',
     ];
-    public function users(){
-        return $this->belongsToMany(
-            User::class,
-            'role_user',
-            'role_id',
-            'user_id'
-        );
-    }
+    protected $casts = [
+        'id' => 'integer'
+    ];
     public function permissions(){
         return $this->belongsToMany(
             Permission::class,
             'role_permission',
             'role_id',
             'permission_id'
+        );
+    }
+    public function users(){
+        return $this->belongsToMany(
+            User::class,
+            'role_user',
+            'role_id',
+            'user_id'
         );
     }
 }

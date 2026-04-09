@@ -9,12 +9,11 @@ class Permission extends Model {
         'permission_code',
         'description',
     ];
-    protected function casts(): array {
-        return [
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'id' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
     public function roles(){
         return $this->belongsToMany(
             Role::class,

@@ -1,9 +1,7 @@
 <?php
 namespace App\Models;
 use App\Traits\ApiTrait;
-use Illuminate\Database\Eloquent\Model;
-class CaseFile extends Model {
-    use ApiTrait;
+class CaseFile extends Api {
     protected $table = 'case_files';
     protected $fillable = [
         'file_number',

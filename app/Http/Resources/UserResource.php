@@ -15,15 +15,15 @@ class UserResource extends JsonResource {
             'correo_electrónico' => $this->email,
             'contraseña' => $this->password,
             'teléfono' => $this->phone,
-            'abogado_asignado' => UserResource::make($this->whenLoaded('lawyer')),
             'número_colegiatura' => $this->tuition_number,
             'foto_perfil' => $this->profile_photo ? Storage::url($this->profile_photo) : 'https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg',
             'está_activo' => $this->is_active,
             'último_inicio_el' => $this->last_login_at,
+            'abogado_asignado' => $this->lawyer,
             'creado_el' => $this->created_at,
-            'actualziado_el' => $this->updated_at,
-            'roles_asignados' => RoleResource::collection($this->whenLoaded('roles')),
-            'especialidades_asignadas' => SpecialtyResource::collection($this->whenLoaded('specialties')),
+            'actualizado_el' => $this->updated_at,
+            // 'roles_asignados' => RoleResource::collection($this->whenLoaded('roles')) : null,
+            // 'especialidades_asignadas' => SpecialtyResource::collection($this->whenLoaded('specialties')),
         ];
     }
 }

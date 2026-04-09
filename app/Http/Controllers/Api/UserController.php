@@ -28,7 +28,7 @@ class UserController extends Controller {
         return UserResource::make($user->load(['roles','lawyer','specialties']));
     }
     public function show(User $user) {
-        return UserResource::make($user->load(['roles','lawyer','specialties']));
+        return UserResource::make($user);
     }
     public function update(UpdateUserRequest $request, User $user) {
         $data = $request->validated();
