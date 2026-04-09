@@ -8,7 +8,12 @@ class IncludeScope implements Scope {
         if (empty(request('include'))) {
             return ;
         }
-        $relations = explode(',',request('include'));
-        $builder->with($relations);
+        $includes = explode(',',request('include'));
+        $relations = collect($includes)->filter(function ($relation) use ($model) {
+            return method_exists($model,$relation);
+        })->values()->all();
+        if (!empty($relations)) {
+            $builder->with($relations);
+        }
     }
 }

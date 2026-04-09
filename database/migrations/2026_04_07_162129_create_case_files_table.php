@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('process',100)->nullable();
             $table->string('subject')->nullable();
             $table->date('completion_date')->nullable();
-            $table->text('reason_conclusion');
+            $table->text('reason_conclusion')->nullable();
             $table->foreignId('specialty_id')->constrained('specialties')->cascadeOnDelete();
             $table->foreignId('status_id')->constrained('file_statuses')->cascadeOnDelete();
             $table->foreignId('location_id')->constrained('file_locations')->cascadeOnDelete();

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller {
     public function index() {
         $users = User::getOrPaginate();
-        return UserResource::collection($users->load(['roles','specialties']));
+        return UserResource::collection($users);
     }
     public function store(StoreUserRequest $request) {
         $data = $request->validated();

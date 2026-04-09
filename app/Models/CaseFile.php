@@ -1,7 +1,9 @@
 <?php
 namespace App\Models;
+use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Model;
 class CaseFile extends Model {
+    use ApiTrait;
     protected $table = 'case_files';
     protected $fillable = [
         'file_number',
@@ -20,19 +22,17 @@ class CaseFile extends Model {
         'lawyer_id',
         'customer_id',
     ];
-    protected function casts(): array {
-        return [
-            'created_at' => 'datetime',
-            'updated_at' => 'datetime',
-            'start_date' => 'date',
-            'completion_date' => 'date',
-            'specialty_id' => 'integer',
-            'status_id' => 'integer',
-            'location_id' => 'integer',
-            'lawyer_id' => 'integer',
-            'customer_id' => 'integer',
-        ];
-    }
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'start_date' => 'date',
+        'completion_date' => 'date',
+        'specialty_id' => 'integer',
+        'status_id' => 'integer',
+        'location_id' => 'integer',
+        'lawyer_id' => 'integer',
+        'customer_id' => 'integer',
+    ];
     public function specialty(){
         return $this->belongsTo(Specialty::class,'specialty_id');
     }

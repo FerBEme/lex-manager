@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Api\CaseFileController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\FileLocationController;
 use App\Http\Controllers\Api\FileStatusController;
@@ -14,3 +15,4 @@ Route::apiResource('permissions',PermissionController::class);
 Route::apiResource('file_statuses',FileStatusController::class);
 Route::apiResource('file_locations',FileLocationController::class);
 Route::apiResource('users',UserController::class);
+Route::apiResource('case_files',CaseFileController::class);
