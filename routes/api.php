@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\CaseFileController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\FileController;
+use App\Http\Controllers\Api\FolderController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Auth\AuthController;
@@ -16,4 +18,6 @@ Route::middleware('auth:api')->group(function(){
     Route::apiResource('users',UserController::class);
     Route::apiResource('customers',CustomerController::class);
     Route::apiResource('case_files',CaseFileController::class);
+    Route::apiResource('folders',FolderController::class);
+    Route::apiResource('files',FileController::class);
 });

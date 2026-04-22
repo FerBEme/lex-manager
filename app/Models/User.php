@@ -1,12 +1,11 @@
 <?php
 namespace App\Models;
-use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject{
-    use HasFactory, Notifiable,ApiTrait;
+    use HasFactory, Notifiable;
     protected $fillable = [
         'document_type',
         'nro_document',

@@ -1,10 +1,9 @@
 <?php
 namespace App\Models;
-use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 class Customer extends Model {
-    use HasFactory,ApiTrait;
+    use HasFactory;
     protected $fillable = [
         'document_type',
         'nro_document',

@@ -1,10 +1,9 @@
 <?php
 namespace App\Models;
-use App\Traits\ApiTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 class CaseFile extends Model {
-    use HasFactory,ApiTrait;
+    use HasFactory;
     protected $fillable = [
         'case_number',
         'judicial_body',

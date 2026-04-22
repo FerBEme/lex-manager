@@ -4,6 +4,8 @@ namespace Database\Seeders;
 use App\Models\CaseFile;
 use App\Models\Customer;
 use App\Models\EventType;
+use App\Models\File;
+use App\Models\Folder;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -51,6 +53,38 @@ class DatabaseSeeder extends Seeder {
             CaseFile::factory(random_int(1,3))->create([
                 'customer_id' => $customer->id,
                 'lawyer_id' => $lawyer->inRandomOrder()->first()->id,
+            ]);
+        }
+        $allUsers = User::all();
+        $allCases = CaseFile::all();
+        foreach ($allCases as $case) {
+            $roots = Folder::factory(random_int(2, 3))->create([
+                'case_id' => $case->id,
+                'created_by' => $allUsers->random()->id,
+                'parent_id' => null,
+            ]);
+            foreach ($roots as $root) {
+                $children = Folder::factory(random_int(1, 3))->create([
+                    'case_id' => $case->id,
+                    'created_by' => $allUsers->random()->id,
+                    'parent_id' => $root->id,
+                ]);
+                foreach ($children as $child) {
+                    if (rand(0, 1)) {
+                        Folder::factory()->create([
+                            'case_id' => $case->id,
+                            'created_by' => $allUsers->random()->id,
+                            'parent_id' => $child->id,
+                        ]);
+                    }
+                }
+            }
+        }
+        $allFolders = Folder::all();
+        foreach ($allFolders as $folder) {
+            File::factory(random_int(1, 5))->create([
+                'folder_id' => $folder->id,
+                'uploaded_by' => $allUsers->random()->id,
             ]);
         }
     }

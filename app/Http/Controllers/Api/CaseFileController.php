@@ -12,11 +12,30 @@ class CaseFileController extends Controller {
         Gate::authorize('viewAny',CaseFile::class);
         $userAuth = Auth::guard('api')->user();
         $query = CaseFile::query();
-        if($userAuth->role_id === 2)
-            $query->where('lawyer_id',$userAuth->id);
-        elseif($userAuth->role_id === 3)
-            $query->where('lawyer_id',$userAuth->lawyer_id);
-        $caseFiles = $query->getOrPaginate();
+        if($userAuth->role_id === 2) $query->where('lawyer_id',$userAuth->id);
+        elseif($userAuth->role_id === 3) $query->where('lawyer_id',$userAuth->lawyer_id);
+        if(request('filters')){
+            foreach (request('filters') as $column => $conditions) {
+                foreach ($conditions as $operator => $value) {
+                    if (in_array($operator,['!=','=','>','>=','<','<='])) $query->where($column,$operator,$value);
+                    if ($operator === 'like') $query->where($column,'like',"%$value%");
+                }
+            }
+        }
+        if (request('select')) $query->select(explode(',',request('select')));
+        if (request('sort')) {
+            foreach (explode(',',request('sort')) as $sort) {
+                $direction = 'asc';
+                if (substr($sort,0,1) === '-') {
+                    $direction = 'desc';
+                    $sort = substr($sort,1);
+                }
+                $query->orderBy($sort,$direction);
+            }
+        }
+        if (request('include')) $query->with(explode(',',request('include')));
+        if (request('perPage')) $caseFiles = $query->paginate(request('perPage'));
+        else $caseFiles = $query->get();
         return CaseFileResource::collection($caseFiles);
     }
     public function store(StoreCaseFileRequest $request) {

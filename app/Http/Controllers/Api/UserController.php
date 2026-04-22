@@ -13,13 +13,31 @@ class UserController extends Controller {
         Gate::authorize('viewAny',User::class);
         $userAuth = Auth::guard('api')->user();
         $query = User::query();
-        if($userAuth->role_id === 1)
-            $query->where('id','!=',$userAuth->id);
-        elseif($userAuth->role_id === 2)
-            $query->where('lawyer_id',$userAuth->id);
-        else
-            return response()->json(['message' => 'Forbidden'],403);
-        $users = $query->getOrPaginate();
+        if($userAuth->role_id === 1) $query->where('id','!=',$userAuth->id);
+        elseif($userAuth->role_id === 2) $query->where('role_id',3)->where('lawyer_id',$userAuth->id);
+        else return response()->json(['message' => 'Forbidden'],403);
+        if(request('filters')){
+            foreach (request('filters') as $column => $conditions) {
+                foreach ($conditions as $operator => $value) {
+                    if (in_array($operator,['!=','=','>','>=','<','<='])) $query->where($column,$operator,$value);
+                    if ($operator === 'like') $query->where($column,'like',"%$value%");
+                }
+            }
+        }
+        if (request('select')) $query->select(explode(',',request('select')));
+        if (request('sort')) {
+            foreach (explode(',',request('sort')) as $sort) {
+                $direction = 'asc';
+                if (substr($sort,0,1) === '-') {
+                    $direction = 'desc';
+                    $sort = substr($sort,1);
+                }
+                $query->orderBy($sort,$direction);
+            }
+        }
+        if (request('include')) $query->with(explode(',',request('include')));
+        if (request('perPage')) $users = $query->paginate(request('perPage'));
+        else $users = $query->get();
         return UserResource::collection($users);
     }
     public function store(StoreUserRequest $request) {
