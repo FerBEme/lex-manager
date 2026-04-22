@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 class UserController extends Controller {
     public function index() {
         Gate::authorize('viewAny',User::class);
@@ -29,6 +30,8 @@ class UserController extends Controller {
             $data['role_id'] = 3;
             $data['lawyer_id'] = $userAuth->id;
         }
+        if($request->hasFile('profile_photo'))
+            $data['profile_photo'] = Storage::put('images',$request->file('profile_photo'));
         $user = User::create($data);
         return UserResource::make($user);
     }
@@ -43,6 +46,10 @@ class UserController extends Controller {
         if($userAuth->role_id === 2) {
             $data['role_id'] = 3;
             $data['lawyer_id'] = $userAuth->id;
+        }
+        if($request->hasFile('profile_photo')){
+            if($user->profile_photo) Storage::delete($user->profile_photo);
+            $data['profile_photo'] = Storage::put('images',$request->file('profile_photo'));            
         }
         $user->update($data);
         return UserResource::make($user);

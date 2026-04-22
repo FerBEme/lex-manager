@@ -11,13 +11,13 @@ return new class extends Migration {
             $table->string('judicial_district')->nullable();
             $table->string('judge')->nullable();
             $table->string('legal_specialist')->nullable();
-            $table->dateTime('start_date');
+            $table->date('start_date');
             $table->string('process_type')->nullable();
             $table->string('specialty')->nullable();
             $table->text('subject')->nullable();
             $table->string('status',100)->nullable();
             $table->string('procedural_stage',100)->nullable();
-            $table->dateTime('end_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->text('conclusion_reason')->nullable();
             $table->text('location')->nullable();
             $table->text('summary')->nullable();

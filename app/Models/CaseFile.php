@@ -26,8 +26,8 @@ class CaseFile extends Model {
     ];
     protected $casts = [
         'id'          => 'integer',
-        'start_date'  => 'datetime',
-        'end_date'    => 'datetime',
+        'start_date'  => 'date',
+        'end_date'    => 'date',
         'customer_id' => 'integer',
         'lawyer_id'   => 'integer',
         'created_at'  => 'datetime',

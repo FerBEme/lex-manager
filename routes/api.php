@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CaseFileController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\UserController;
@@ -14,4 +15,5 @@ Route::middleware('auth:api')->group(function(){
     Route::apiResource('roles',RoleController::class);
     Route::apiResource('users',UserController::class);
     Route::apiResource('customers',CustomerController::class);
+    Route::apiResource('case_files',CaseFileController::class);
 });

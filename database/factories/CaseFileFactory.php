@@ -4,19 +4,21 @@ use App\Models\CaseFile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 class CaseFileFactory extends Factory {
     public function definition(): array {
+        $startDate = $this->faker->dateTimeBetween('-3 years', 'now');
+        $endDate = $this->faker->optional()->dateTimeBetween($startDate, '+1 year');
         return [
             'case_number' => $this->generateCaseNumber(),
             'judicial_body' => fake()->randomElement(['Juzgado Civil','Juzgado Penal','Juzgado Laboral']),
             'judicial_district' => fake()->randomElement(['Lima','Arequipa','Cusco']),
             'judge' => fake()->name(),
             'legal_specialist' => fake()->name(),
-            'start_date' => fake()->dateTimeBetween('-3 years', 'now'),
+            'start_date' => $startDate->format('Y-m-d'),
             'process_type' => fake()->randomElement(['Ordinario','Sumarísimo','Ejecutivo']),
             'specialty' => fake()->randomElement(['Civil','Penal','Laboral']),
             'subject' => fake()->sentence(),
             'status' => fake()->randomElement(['En trámite','Archivado','Concluido']),
             'procedural_stage' => fake()->randomElement(['Inicio','Investigación','Sentencia']),
-            'end_date' => fake()->optional()->dateTimeBetween('now', '+1 year'),
+            'end_date' => $endDate ? $endDate->format('Y-m-d') : null,
             'conclusion_reason' => fake()->optional()->sentence(),
             'location' => fake()->address(),
             'summary' => fake()->paragraph(),
