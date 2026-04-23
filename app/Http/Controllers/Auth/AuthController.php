@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller {
@@ -14,7 +15,7 @@ class AuthController extends Controller {
     public function me(){
         /** @var JWTAuth $guard */
         $guard = Auth::guard('api');
-        return response()->json($guard->user()->load('role'));
+        return UserResource::make($guard->user());
     }
     public function logout(){
         Auth::guard('api')->logout();
@@ -33,7 +34,7 @@ class AuthController extends Controller {
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => $guard->factory()->getTTL() * 60,
-            'userAuth' => $user,
+            'userAuth' => UserResource::make($guard->user()),
             'role' => $user->role->name,
         ]);
     }

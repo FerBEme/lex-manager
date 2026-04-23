@@ -12,7 +12,7 @@
 
     if (role) {
         if (role === 'admin') {
-            window.location.href = '/admin/dashboard';
+            window.location.href = '/admin';
         } else if (role === 'lawyer') {
             window.location.href = '/lawyer/home';
         } else if (role === 'secretary') {
