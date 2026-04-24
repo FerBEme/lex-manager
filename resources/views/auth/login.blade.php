@@ -8,17 +8,13 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center">
     <script>
-    const role = localStorage.getItem('role');
+        if (window.location.pathname === "/") {
+            const role = localStorage.getItem('role');
 
-    if (role) {
-        if (role === 'admin') {
-            window.location.href = '/admin';
-        } else if (role === 'lawyer') {
-            window.location.href = '/lawyer/home';
-        } else if (role === 'secretary') {
-            window.location.href = '/secretary/home';
+            if (role === 'admin') window.location.href = '/admin';
+            else if (role === 'lawyer') window.location.href = '/lawyer/home';
+            else if (role === 'secretary') window.location.href = '/secretary/home';
         }
-    }
     </script>
 
     <div class="w-full max-w-md bg-white rounded-xl shadow-lg p-8">
@@ -125,7 +121,8 @@
                     document.getElementById('errorBox').classList.remove('hidden');
                     return;
                 }
-                localStorage.setItem('token',response.access_token);
+                localStorage.setItem('token', response.access_token);
+                document.cookie = "token=" + response.access_token + "; path=/; SameSite=Lax";
                 localStorage.setItem('user',JSON.stringify(response.userAuth));
                 localStorage.setItem('role',response.role);
                 const role = response.role;

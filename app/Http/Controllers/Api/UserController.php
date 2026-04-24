@@ -55,7 +55,7 @@ class UserController extends Controller {
     }
     public function show(User $user) {
         Gate::authorize('view',$user);
-        return UserResource::make($user);
+        return UserResource::make($user->load(['role','lawyer']));
     }
     public function update(UpdateUserRequest $request, User $user) {
         Gate::authorize('update',$user);
